@@ -79,29 +79,39 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
 
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         
-        guard anchor is ARPlaneAnchor else {return}
-        let grid = Grid(anchor: anchor as! ARPlaneAnchor)
+//        guard anchor is ARPlaneAnchor else {return}
+//        let grid = Grid(anchor: anchor as! ARPlaneAnchor)
+//        self.grids.append(grid)
+//        DispatchQueue.main.async {
+//            //self.planeDetected.isHidden = false
+//            node.addChildNode(grid)
+//        }
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+//            //self.planeDetected.isHidden = true
+//            node.removeFromParentNode()
+//        }
+        
+        guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
+        let grid = Grid(anchor: planeAnchor)
         self.grids.append(grid)
-        DispatchQueue.main.async {
-            //self.planeDetected.isHidden = false
-            node.addChildNode(grid)
-        }
+        node.addChildNode(grid)
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            //self.planeDetected.isHidden = true
             node.removeFromParentNode()
         }
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
+        guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
         let grid = self.grids.filter { grid in
-            return grid.anchor.identifier == anchor.identifier
+            return grid.anchor.identifier == planeAnchor.identifier
             }.first
         
         guard let foundGrid = grid else {
             return
         }
         
-        foundGrid.update(anchor: anchor as! ARPlaneAnchor)
+        foundGrid.update(anchor: planeAnchor)
     }
     
     
