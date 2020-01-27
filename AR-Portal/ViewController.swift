@@ -2,8 +2,8 @@
 //  ViewController.swift
 //  AR-Portal
 //
-//  Created by Rayan Slim on 2017-08-31.
-//  Copyright © 2017 Rayan Slim. All rights reserved.
+//  Created by Ethan D'Mello on 2017-08-31.
+//  Copyright © 2017 Ethan D'Mello. All rights reserved.
 //
 
 import UIKit
@@ -38,14 +38,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
             self.sceneView.session.run(configuration)
 
             self.addPortal(hitTestResult: hitTestResult.first!)
-            let soundURL = Bundle.main.url(forResource: "cranes", withExtension: "mp3" )
-            do{
-                audioPlayer = try AVAudioPlayer(contentsOf: soundURL!)
-            }
-            catch{
-                print(error)
-            }
-            audioPlayer.play()
+//            let soundURL = Bundle.main.url(forResource: "cranes", withExtension: "mp3" )
+//            do{
+//                audioPlayer = try AVAudioPlayer(contentsOf: soundURL!)
+//            }
+//            catch{
+//                print(error)
+//            }
+//            audioPlayer.play()
         } else {
             ////
         }
@@ -63,12 +63,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         self.sceneView.scene.rootNode.addChildNode(portalNode)
         self.addPlane(nodeName: "roof", portalNode: portalNode, imageName: "realSky")
         self.addPlane(nodeName: "floor", portalNode: portalNode, imageName: "flower")
-        self.addWalls(nodeName: "backWall", portalNode: portalNode, imageName: "grad")
-        self.addWalls(nodeName: "sideWallA", portalNode: portalNode, imageName: "rightSide")
-        self.addWalls(nodeName: "sideWallB", portalNode: portalNode, imageName: "leftSide")
-        self.addWalls(nodeName: "sideDoorA", portalNode: portalNode, imageName: "farmDork")
-        self.addWalls(nodeName: "sideDoorB", portalNode: portalNode, imageName: "rainDork")
-        self.addWalls(nodeName: "headBoard", portalNode: portalNode, imageName: "title")
+        self.addWalls(nodeName: "backWall", portalNode: portalNode, imageName: "lego")
+        self.addWalls(nodeName: "sideWallA", portalNode: portalNode, imageName: "lego")
+        self.addWalls(nodeName: "sideWallB", portalNode: portalNode, imageName: "lego")
+        self.addWalls(nodeName: "sideDoorA", portalNode: portalNode, imageName: "lego")
+        self.addWalls(nodeName: "sideDoorB", portalNode: portalNode, imageName: "lego")
+        self.addWalls(nodeName: "headBoard", portalNode: portalNode, imageName: "lego")
     }
 
     override func didReceiveMemoryWarning() {
