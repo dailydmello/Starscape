@@ -61,14 +61,16 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         let planeZposition = transform.columns.3.z
         portalNode.position =  SCNVector3(planeXposition, planeYposition, planeZposition)
         self.sceneView.scene.rootNode.addChildNode(portalNode)
-        self.addPlane(nodeName: "roof", portalNode: portalNode, imageName: "realSky")
-        self.addPlane(nodeName: "floor", portalNode: portalNode, imageName: "flower")
-        self.addWalls(nodeName: "backWall", portalNode: portalNode, imageName: "lego")
-        self.addWalls(nodeName: "sideWallA", portalNode: portalNode, imageName: "lego")
-        self.addWalls(nodeName: "sideWallB", portalNode: portalNode, imageName: "lego")
-        self.addWalls(nodeName: "sideDoorA", portalNode: portalNode, imageName: "lego")
-        self.addWalls(nodeName: "sideDoorB", portalNode: portalNode, imageName: "lego")
-        self.addWalls(nodeName: "headBoard", portalNode: portalNode, imageName: "lego")
+        self.addPlane(nodeName: "bottom", portalNode: portalNode, imageName: "EarthRiseSmoothBottom")
+        self.addPlane(nodeName: "top", portalNode: portalNode, imageName: "EarthRiseSmoothTop")
+        
+        
+        self.addWalls(nodeName: "left", portalNode: portalNode, imageName: "EarthRiseSmoothLeft")
+        self.addWalls(nodeName: "front", portalNode: portalNode, imageName: "EarthRiseSmoothFront")
+        self.addWalls(nodeName: "right", portalNode: portalNode, imageName: "EarthRiseSmoothRight")
+        self.addWalls(nodeName: "backA", portalNode: portalNode, imageName: "EarthRiseSmoothBackA")
+        self.addWalls(nodeName: "backB", portalNode: portalNode, imageName: "EarthRiseSmoothBackB")
+        self.addWalls(nodeName: "backC", portalNode: portalNode, imageName: "EarthRiseSmoothBackC")
     }
 
     override func didReceiveMemoryWarning() {
