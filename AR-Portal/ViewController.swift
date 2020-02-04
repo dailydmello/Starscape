@@ -69,37 +69,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         
         if let portalNode = portalNode {
             self.sceneView.scene.rootNode.addChildNode(portalNode)
-            
-            self.addPlane(nodeName: "bottom", portalNode: portalNode, imageName: "earthRiseSmoothBottom")
-            self.addPlane(nodeName: "top", portalNode: portalNode, imageName: "earthRiseSmoothTop")
-            self.addWalls(nodeName: "left", portalNode: portalNode, imageName: "earthRiseSmoothLeft")
-            self.addWalls(nodeName: "front", portalNode: portalNode, imageName: "earthRiseSmoothFront")
-            self.addWalls(nodeName: "right", portalNode: portalNode, imageName: "earthRiseSmoothRight")
-            self.addWalls(nodeName: "backA", portalNode: portalNode, imageName: "earthRiseSmoothBackA")
-            self.addWalls(nodeName: "backB", portalNode: portalNode, imageName: "earthRiseSmoothBackB")
-            self.addWalls(nodeName: "backC", portalNode: portalNode, imageName: "earthRiseSmoothBackC")
-            
-            //            self.addPlane(nodeName: "bottom", portalNode: portalNode, imageName: "MilkyWayBottom")
-            //            self.addPlane(nodeName: "top", portalNode: portalNode, imageName: "MilkyWayTop")
-            //
-            //
-            //            self.addWalls(nodeName: "left", portalNode: portalNode, imageName: "MilkyWayLeft")
-            //            self.addWalls(nodeName: "front", portalNode: portalNode, imageName: "MilkyWayFront")
-            //            self.addWalls(nodeName: "right", portalNode: portalNode, imageName: "MilkyWayRight")
-            //            self.addWalls(nodeName: "backA", portalNode: portalNode, imageName: "MilkyWayBackA")
-            //            self.addWalls(nodeName: "backB", portalNode: portalNode, imageName: "MilkyWayBackB")
-            //            self.addWalls(nodeName: "backC", portalNode: portalNode, imageName: "MilkyWayBackC")
-            
-//            self.addPlane(nodeName: "bottom", portalNode: portalNode, imageName: "lego")
-//            self.addPlane(nodeName: "top", portalNode: portalNode, imageName: "lego")
-//
-//
-//            self.addWalls(nodeName: "left", portalNode: portalNode, imageName: "lego")
-//            self.addWalls(nodeName: "front", portalNode: portalNode, imageName: "lego")
-//            self.addWalls(nodeName: "right", portalNode: portalNode, imageName: "lego")
-//            self.addWalls(nodeName: "backA", portalNode: portalNode, imageName: "lego")
-//            self.addWalls(nodeName: "backB", portalNode: portalNode, imageName: "lego")
-//            self.addWalls(nodeName: "backC", portalNode: portalNode, imageName: "lego")
+            updateEarthRiseSmoothNode()
         } else {
             return
         }
@@ -148,23 +118,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         foundGrid.update(anchor: planeAnchor)
     }
     
-    
-    func addWalls(nodeName: String, portalNode: SCNNode, imageName: String) {
-        let child = portalNode.childNode(withName: nodeName, recursively: true)
-        child?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "Portal.scnassets/\(imageName).png")
-        child?.renderingOrder = 200
-        if let mask = child?.childNode(withName: "mask", recursively: false) {
-            mask.geometry?.firstMaterial?.transparency = 0.000001
-        }
-    }
-    
-    
-    func addPlane(nodeName: String, portalNode: SCNNode, imageName: String) {
-        let child = portalNode.childNode(withName: nodeName, recursively: true)
-        child?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "Portal.scnassets/\(imageName).png")
-        child?.renderingOrder = 200
-    }
-    
     func updateEarthRiseSmoothNode() {
         for node in PortalNodes.allCases {
             if node == .backA {
@@ -187,46 +140,130 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         }
     }
     
-    func updateEarthRiseSmoothWallPaper(node: PortalNodes, with wallPaperName: EarthRiseSmooth) {
-        let child = portalNode?.childNode(withName: node.rawValue, recursively: true)
-//        child?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "Portal.scnassets/\(wallPaperName.rawValue).png")
-        child?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "Portal.scnassets/\(wallPaperName.rawValue).png")
-        child?.renderingOrder = 200
+    func updateEarthRiseRockyWallPaper() {
+        for node in PortalNodes.allCases {
+            if node == .backA {
+                updateEarthRiseRockyWallPaper(node: node, with: .earthRiseRockyBackA)
+            } else if node == .backB {
+                updateEarthRiseRockyWallPaper(node: node, with: .earthRiseRockyBackB)
+            } else if node == .backC {
+                updateEarthRiseRockyWallPaper(node: node, with: .earthRiseRockyBackC)
+            } else if node == .bottom {
+                updateEarthRiseRockyWallPaper(node: node, with: .earthRiseRockyBottom)
+            } else if node == .front {
+                updateEarthRiseRockyWallPaper(node: node, with: .earthRiseRockyFront)
+            }  else if node == .left {
+                updateEarthRiseRockyWallPaper(node: node, with: .earthRiseRockyLeft)
+            } else if node == .right {
+                updateEarthRiseRockyWallPaper(node: node, with: .earthRiseRockyRight)
+            } else if node == .top {
+                updateEarthRiseRockyWallPaper(node: node, with: .earthRiseRockyTop)
+            }
+        }
     }
     
-//    func updateWorld(theme: Theme) {
-//        switch theme {
-//        case .earthRiseRocky:
-//            for node in PortalNodes.allCases {
-//                updateEarthRiseRockyNode(node: node)
-//            }
-//        case .earthRiseSmooth:
-//            for node in PortalNodes.allCases {
-//                let child = portalNode?.childNode(withName: node.rawValue, recursively: true)
-//                child?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "Portal.scnassets/lego.png")
-//                child?.renderingOrder = 200
-//            }
-//        case .generalStars:
-//            for node in PortalNodes.allCases {
-//                let child = portalNode?.childNode(withName: node.rawValue, recursively: true)
-//                child?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "Portal.scnassets/lego.png")
-//                child?.renderingOrder = 200
-//            }
-//        case .milkyWay:
-//            for node in PortalNodes.allCases {
-//                let child = portalNode?.childNode(withName: node.rawValue, recursively: true)
-//                child?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "Portal.scnassets/lego.png")
-//                child?.renderingOrder = 200
-//            }
+    func updateMilkyWayWallPaper() {
+        for node in PortalNodes.allCases {
+            if node == .backA {
+                updateMilkyWayWallPaper(node: node, with: .milkyWayBackA)
+            } else if node == .backB {
+                updateMilkyWayWallPaper(node: node, with: .milkyWayBackB)
+            } else if node == .backC {
+                updateMilkyWayWallPaper(node: node, with: .milkyWayBackC)
+            } else if node == .bottom {
+                updateMilkyWayWallPaper(node: node, with: .milkyWayBottom)
+            } else if node == .front {
+                updateMilkyWayWallPaper(node: node, with: .milkyWayFront)
+            }  else if node == .left {
+                updateMilkyWayWallPaper(node: node, with: .milkyWayLeft)
+            } else if node == .right {
+                updateMilkyWayWallPaper(node: node, with: .milkyWayRight)
+            } else if node == .top {
+                updateMilkyWayWallPaper(node: node, with: .milkyWayTop)
+            }
+        }
+    }
+    
+    func updateGeneralStarsWallPaper() {
+        for node in PortalNodes.allCases {
+            if node == .backA {
+                updateGeneralStarsWallPaper(node: node, with: .generalStarsBackA)
+            } else if node == .backB {
+                updateGeneralStarsWallPaper(node: node, with: .generalStarsBackB)
+            } else if node == .backC {
+                updateGeneralStarsWallPaper(node: node, with: .generalStarsBackC)
+            } else if node == .bottom {
+                updateGeneralStarsWallPaper(node: node, with: .generalStarsBottom)
+            } else if node == .front {
+                updateGeneralStarsWallPaper(node: node, with: .generalStarsFront)
+            }  else if node == .left {
+                updateGeneralStarsWallPaper(node: node, with: .generalStarsLeft)
+            } else if node == .right {
+                updateGeneralStarsWallPaper(node: node, with: .generalStarsRight)
+            } else if node == .top {
+                updateGeneralStarsWallPaper(node: node, with: .generalStarsTop)
+            }
+        }
+    }
+    
+//    func update(node: PortalNodes, with wallPaperName: Theme) {
+//        let wallPapers = wallPaperName.getWallPapers()
+//        wallPapers.map(<#T##transform: (WallPaperSections) throws -> T##(WallPaperSections) throws -> T#>)
+//        let child = portalNode?.childNode(withName: node.rawValue, recursively: true)
+//        child?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "Portal.scnassets/\(wallPaperName.rawValue).png")
+//        child?.renderingOrder = 200
+//        if let mask = child?.childNode(withName: "mask", recursively: false) {
+//            mask.geometry?.firstMaterial?.transparency = 0.000001
 //        }
 //    }
+    
+    
+    func updateEarthRiseSmoothWallPaper(node: PortalNodes, with wallPaperName: EarthRiseSmooth) {
+        let child = portalNode?.childNode(withName: node.rawValue, recursively: true)
+        child?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "Portal.scnassets/\(wallPaperName.rawValue).png")
+        child?.renderingOrder = 200
+        if let mask = child?.childNode(withName: "mask", recursively: false) {
+            mask.geometry?.firstMaterial?.transparency = 0.000001
+        }
+    }
+    
+    func updateEarthRiseRockyWallPaper(node: PortalNodes, with wallPaperName: EarthRiseRocky) {
+        let child = portalNode?.childNode(withName: node.rawValue, recursively: true)
+        child?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "Portal.scnassets/\(wallPaperName.rawValue).png")
+        child?.renderingOrder = 200
+        if let mask = child?.childNode(withName: "mask", recursively: false) {
+            mask.geometry?.firstMaterial?.transparency = 0.000001
+        }
+    }
+    
+    func updateMilkyWayWallPaper(node: PortalNodes, with wallPaperName: MilkyWay) {
+        let child = portalNode?.childNode(withName: node.rawValue, recursively: true)
+        child?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "Portal.scnassets/\(wallPaperName.rawValue).png")
+        child?.renderingOrder = 200
+        if let mask = child?.childNode(withName: "mask", recursively: false) {
+            mask.geometry?.firstMaterial?.transparency = 0.000001
+        }
+    }
+    
+    func updateGeneralStarsWallPaper(node: PortalNodes, with wallPaperName: GeneralStars) {
+        let child = portalNode?.childNode(withName: node.rawValue, recursively: true)
+        child?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "Portal.scnassets/\(wallPaperName.rawValue).png")
+        child?.renderingOrder = 200
+        if let mask = child?.childNode(withName: "mask", recursively: false) {
+            mask.geometry?.firstMaterial?.transparency = 0.000001
+        }
+    }
     
     @IBAction func indexChanged(_ sender: Any) {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             updateEarthRiseSmoothNode()
         case 1:
-            updateEarthRiseSmoothNode()
+            updateEarthRiseRockyWallPaper()
+        case 2:
+            updateMilkyWayWallPaper()
+        case 3:
+            updateGeneralStarsWallPaper()
         default:
             break
         }
@@ -239,6 +276,48 @@ enum Theme {
     case earthRiseRocky
     case generalStars
 }
+    
+//    func getWallPapers() -> [WallPaperSections] {
+//        switch self {
+//        case .milkyWay:
+//            return [.milkyWayBackA,.milkyWayBackB]
+//        case .earthRiseSmooth:
+//            return [.earthRiseSmoothBackA,.earthRiseSmoothBackB]
+//        case .earthRiseRocky:
+//            return [.generalStarsBackA,.generalStarsBackB]
+//        case .generalStars:
+//            return [.generalStarsBackA,.generalStarsBackB]
+//        }
+//    }
+//
+//}
+
+//enum WallPaperSections {
+//    case milkyWayBackA
+//    case milkyWayBackB
+//    case milkyWayBackC
+//    case milkyWayBottom
+//    case milkyWayFront
+//    case milkyWayLeft
+//    case milkyWayRight
+//    case milkyWayTop
+//    case earthRiseSmoothBackA
+//    case earthRiseSmoothBackB
+//    case earthRiseSmoothBackC
+//    case earthRiseSmoothBottom
+//    case earthRiseSmoothFront
+//    case earthRiseSmoothLeft
+//    case earthRiseSmoothRight
+//    case earthRiseSmoothTop
+//    case generalStarsBackA
+//    case generalStarsBackB
+//    case generalStarsBackC
+//    case generalStarsBottom
+//    case generalStarsFront
+//    case generalStarsLeft
+//    case generalStarsRight
+//    case generalStarsTop
+//}
 
 enum MilkyWay: String, CaseIterable {
     case milkyWayBackA
@@ -271,7 +350,6 @@ enum EarthRiseRocky: String, CaseIterable {
     case earthRiseRockyLeft
     case earthRiseRockyRight
     case earthRiseRockyTop
-    case lego
 }
 
 enum GeneralStars: String, CaseIterable {
