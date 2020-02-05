@@ -19,19 +19,12 @@
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ygn-3s-aaH">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </arscnView>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Plane Detected" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dw8-Bb-Eez">
-                                <rect key="frame" x="105.5" y="40" width="164" height="30.5"/>
-                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="22"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="mIT-Ed-C41">
-                                <rect key="frame" x="132" y="561" width="111" height="32"/>
+                                <rect key="frame" x="146" y="561" width="83" height="32"/>
                                 <segments>
                                     <segment title="1"/>
                                     <segment title="2"/>
                                     <segment title="3"/>
-                                    <segment title="4"/>
                                 </segments>
                                 <connections>
                                     <action selector="indexChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="QhW-uk-yhO"/>
@@ -41,8 +34,6 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Ygn-3s-aaH" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="8lC-mp-aTe"/>
-                            <constraint firstItem="Dw8-Bb-Eez" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="NN9-iq-JaR"/>
-                            <constraint firstItem="Dw8-Bb-Eez" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="RYR-n8-Jvz"/>
                             <constraint firstItem="Ygn-3s-aaH" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ViQ-aU-7oG"/>
                             <constraint firstItem="Ygn-3s-aaH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="WLw-U4-SPq"/>
                             <constraint firstItem="mIT-Ed-C41" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="uUO-3m-KeJ"/>
@@ -52,7 +43,6 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="planeDetected" destination="Dw8-Bb-Eez" id="JfB-Ou-95y"/>
                         <outlet property="sceneView" destination="Ygn-3s-aaH" id="iA3-h0-abh"/>
                         <outlet property="segmentedControl" destination="mIT-Ed-C41" id="FFh-rW-TUc"/>
                     </connections>

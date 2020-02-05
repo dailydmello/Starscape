@@ -118,6 +118,20 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         foundGrid.update(anchor: planeAnchor)
     }
     
+    @IBAction func indexChanged(_ sender: Any) {
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
+            updateEarthRiseSmoothNode()
+        case 1:
+            updateMilkyWayWallPaper()
+        case 2:
+            updateGeneralStarsWallPaper()
+        default:
+            break
+        }
+    }
+    
+    //MARK: Update Environment
     func updateEarthRiseSmoothNode() {
         for node in PortalNodes.allCases {
             if node == .backA {
@@ -136,28 +150,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
                 updateEarthRiseSmoothWallPaper(node: node, with: .earthRiseSmoothRight)
             } else if node == .top {
                 updateEarthRiseSmoothWallPaper(node: node, with: .earthRiseSmoothTop)
-            }
-        }
-    }
-    
-    func updateEarthRiseRockyWallPaper() {
-        for node in PortalNodes.allCases {
-            if node == .backA {
-                updateEarthRiseRockyWallPaper(node: node, with: .earthRiseRockyBackA)
-            } else if node == .backB {
-                updateEarthRiseRockyWallPaper(node: node, with: .earthRiseRockyBackB)
-            } else if node == .backC {
-                updateEarthRiseRockyWallPaper(node: node, with: .earthRiseRockyBackC)
-            } else if node == .bottom {
-                updateEarthRiseRockyWallPaper(node: node, with: .earthRiseRockyBottom)
-            } else if node == .front {
-                updateEarthRiseRockyWallPaper(node: node, with: .earthRiseRockyFront)
-            }  else if node == .left {
-                updateEarthRiseRockyWallPaper(node: node, with: .earthRiseRockyLeft)
-            } else if node == .right {
-                updateEarthRiseRockyWallPaper(node: node, with: .earthRiseRockyRight)
-            } else if node == .top {
-                updateEarthRiseRockyWallPaper(node: node, with: .earthRiseRockyTop)
             }
         }
     }
@@ -206,28 +198,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         }
     }
     
-//    func update(node: PortalNodes, with wallPaperName: Theme) {
-//        let wallPapers = wallPaperName.getWallPapers()
-//        wallPapers.map(<#T##transform: (WallPaperSections) throws -> T##(WallPaperSections) throws -> T#>)
-//        let child = portalNode?.childNode(withName: node.rawValue, recursively: true)
-//        child?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "Portal.scnassets/\(wallPaperName.rawValue).png")
-//        child?.renderingOrder = 200
-//        if let mask = child?.childNode(withName: "mask", recursively: false) {
-//            mask.geometry?.firstMaterial?.transparency = 0.000001
-//        }
-//    }
-    
-    
     func updateEarthRiseSmoothWallPaper(node: PortalNodes, with wallPaperName: EarthRiseSmooth) {
-        let child = portalNode?.childNode(withName: node.rawValue, recursively: true)
-        child?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "Portal.scnassets/\(wallPaperName.rawValue).png")
-        child?.renderingOrder = 200
-        if let mask = child?.childNode(withName: "mask", recursively: false) {
-            mask.geometry?.firstMaterial?.transparency = 0.000001
-        }
-    }
-    
-    func updateEarthRiseRockyWallPaper(node: PortalNodes, with wallPaperName: EarthRiseRocky) {
         let child = portalNode?.childNode(withName: node.rawValue, recursively: true)
         child?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "Portal.scnassets/\(wallPaperName.rawValue).png")
         child?.renderingOrder = 200
@@ -253,71 +224,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
             mask.geometry?.firstMaterial?.transparency = 0.000001
         }
     }
-    
-    @IBAction func indexChanged(_ sender: Any) {
-        switch segmentedControl.selectedSegmentIndex {
-        case 0:
-            updateEarthRiseSmoothNode()
-        case 1:
-            updateEarthRiseRockyWallPaper()
-        case 2:
-            updateMilkyWayWallPaper()
-        case 3:
-            updateGeneralStarsWallPaper()
-        default:
-            break
-        }
-    }
 }
 
+//MARK: Environment Enums
 enum Theme {
     case milkyWay
     case earthRiseSmooth
-    case earthRiseRocky
     case generalStars
 }
-    
-//    func getWallPapers() -> [WallPaperSections] {
-//        switch self {
-//        case .milkyWay:
-//            return [.milkyWayBackA,.milkyWayBackB]
-//        case .earthRiseSmooth:
-//            return [.earthRiseSmoothBackA,.earthRiseSmoothBackB]
-//        case .earthRiseRocky:
-//            return [.generalStarsBackA,.generalStarsBackB]
-//        case .generalStars:
-//            return [.generalStarsBackA,.generalStarsBackB]
-//        }
-//    }
-//
-//}
-
-//enum WallPaperSections {
-//    case milkyWayBackA
-//    case milkyWayBackB
-//    case milkyWayBackC
-//    case milkyWayBottom
-//    case milkyWayFront
-//    case milkyWayLeft
-//    case milkyWayRight
-//    case milkyWayTop
-//    case earthRiseSmoothBackA
-//    case earthRiseSmoothBackB
-//    case earthRiseSmoothBackC
-//    case earthRiseSmoothBottom
-//    case earthRiseSmoothFront
-//    case earthRiseSmoothLeft
-//    case earthRiseSmoothRight
-//    case earthRiseSmoothTop
-//    case generalStarsBackA
-//    case generalStarsBackB
-//    case generalStarsBackC
-//    case generalStarsBottom
-//    case generalStarsFront
-//    case generalStarsLeft
-//    case generalStarsRight
-//    case generalStarsTop
-//}
 
 enum MilkyWay: String, CaseIterable {
     case milkyWayBackA
@@ -339,17 +253,6 @@ enum EarthRiseSmooth: String, CaseIterable {
     case earthRiseSmoothLeft
     case earthRiseSmoothRight
     case earthRiseSmoothTop
-}
-
-enum EarthRiseRocky: String, CaseIterable {
-    case earthRiseRockyBackA
-    case earthRiseRockyBackB
-    case earthRiseRockyBackC
-    case earthRiseRockyBottom
-    case earthRiseRockyFront
-    case earthRiseRockyLeft
-    case earthRiseRockyRight
-    case earthRiseRockyTop
 }
 
 enum GeneralStars: String, CaseIterable {
