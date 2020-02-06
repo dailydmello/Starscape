@@ -13,7 +13,6 @@ import AVFoundation
 class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate {
     
     //MARK: Properties
-    @IBOutlet weak var planeDetected: UILabel!
     @IBOutlet weak var sceneView: ARSCNView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
@@ -42,20 +41,19 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
             sceneView.debugOptions = []
             sceneView.session.run(configuration)
             
-            //TODO: Unhide segmented control
+            segmentedControl.isHidden = false
             addPortal(hitTestResult: hitTestResult.first!)
-            //            let soundURL = Bundle.main.url(forResource: "cranes", withExtension: "mp3" )
-            //            do{
-            //                audioPlayer = try AVAudioPlayer(contentsOf: soundURL!)
-            //            }
-            //            catch{
-            //                print(error)
-            //            }
-            //            audioPlayer.play()
+//            let soundURL = Bundle.main.url(forResource: "starscape", withExtension: "mp4" )
+//            do{
+//                audioPlayer = try AVAudioPlayer(contentsOf: soundURL!)
+//            }
+//            catch{
+//                print(error)
+//            }
+//            audioPlayer.play()
         } else {
             ////
         }
-        
     }
     
     func addPortal(hitTestResult: ARHitTestResult) {
