@@ -20,6 +20,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
     var audioPlayer: AVAudioPlayer!
     var grids = [Grid]()
     var portalNode: SCNNode?
+    var gridNode: SCNNode?
     
     //MARK: LifeCycle
     override func viewDidLoad() {
@@ -37,22 +38,27 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         let touchLocation = sender.location(in: sceneView)
         let hitTestResult = sceneView.hitTest(touchLocation, types: .existingPlaneUsingExtent)
         if !hitTestResult.isEmpty {
+            gridNode?.removeFromParentNode()
             configuration.planeDetection = []
             sceneView.debugOptions = []
             sceneView.session.run(configuration)
-            
             segmentedControl.isHidden = false
             addPortal(hitTestResult: hitTestResult.first!)
-//            let soundURL = Bundle.main.url(forResource: "starscape", withExtension: "mp4" )
-//            do{
-//                audioPlayer = try AVAudioPlayer(contentsOf: soundURL!)
-//            }
-//            catch{
-//                print(error)
-//            }
-//            audioPlayer.play()
+            startMusic()
         } else {
-            ////
+            //do nothing
+        }
+    }
+    
+    func startMusic() {
+        let soundURL = Bundle.main.url(forResource: "ambient", withExtension: "mp3" )
+        do{
+            audioPlayer = try AVAudioPlayer(contentsOf: soundURL!)
+            audioPlayer.numberOfLoops = -1
+            audioPlayer.play()
+        }
+        catch{
+            print(error)
         }
     }
     
@@ -73,34 +79,17 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         }
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        
-        //        guard anchor is ARPlaneAnchor else {return}
-        //        let grid = Grid(anchor: anchor as! ARPlaneAnchor)
-        //        self.grids.append(grid)
-        //        DispatchQueue.main.async {
-        //            //self.planeDetected.isHidden = false
-        //            node.addChildNode(grid)
-        //        }
-        //        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-        //            //self.planeDetected.isHidden = true
-        //            node.removeFromParentNode()
-        //        }
-        
         guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
         let grid = Grid(anchor: planeAnchor)
         self.grids.append(grid)
         node.addChildNode(grid)
+        gridNode = node
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            node.removeFromParentNode()
-        }
+        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+//            node.removeFromParentNode()
+//        }
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
