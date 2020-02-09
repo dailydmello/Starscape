@@ -21,7 +21,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
     var grids = [Grid]()
     var portalNode: SCNNode?
     
-    //MARK: LifeCycle
+    //MARK: LifeCycle & Initialization
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -34,6 +34,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         sceneView.addGestureRecognizer(tapGestureRecognizer)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        showPlugInHeadphonesAlert(isHeadphonesPluggedIn: isHeadphonesConnected())
+        super.viewDidAppear(animated)
+    }
+            
     @objc func tapped(sender: UITapGestureRecognizer) {
         // Get 2D position of touch event on screen
         guard let sceneView = sender.view as? ARSCNView else {return}
@@ -72,6 +77,51 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         segmentedControl.setTitleTextAttributes(selectedTextAttributes, for: .selected)
     }
     
+    //MARK: Instructions
+    func showPlugInHeadphonesAlert(isHeadphonesPluggedIn: Bool) {
+        if !isHeadphonesPluggedIn {
+            let alertController = UIAlertController(title: Constants.plugHeadphonesAlertTitle, message: Constants.plugHeadphonesAlertMessage, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+                self.showSpaceAlert()
+            }
+            alertController.addAction(okAction)
+            present(alertController, animated: true, completion: nil)
+        } else {
+            showSpaceAlert()
+        }
+    }
+    
+    func showSpaceAlert() {
+        let alertController = UIAlertController(title: Constants.makeSureOpenSpaceTitle, message: Constants.makeSureOpenSpaceMessage, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+            self.showInstructionsAlert()
+        }
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func showInstructionsAlert() {
+        let alertController = UIAlertController(title: Constants.instructionsTitle, message: Constants.instructionsMessage, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "I'm ready", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func isHeadphonesConnected() -> Bool {
+        let currentRoute = AVAudioSession.sharedInstance().currentRoute
+        
+        for description in currentRoute.outputs {
+            switch description.portType {
+            case .headphones, .bluetoothHFP, .bluetoothA2DP, .bluetoothLE:
+                return true
+            default:
+                return false
+            }
+        }
+        return false
+    }
+    
+    //MARK: Start Music
     func startMusic() {
         let soundURL = Bundle.main.url(forResource: "ambient", withExtension: "mp3" )
         do{
@@ -84,6 +134,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         }
     }
     
+    //MARK: Portal Methods
     func addPortal(hitTestResult: ARHitTestResult) {
         let portalScene = SCNScene(named: "Portal.scnassets/Portal.scn")
         portalNode = portalScene!.rootNode.childNode(withName: "Portal", recursively: false)!
@@ -96,7 +147,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         if let portalNode = portalNode {
             sceneView.scene.rootNode.addChildNode(portalNode)
             startMusic()
-            updateEarthRiseSmoothWallPaper()
+            updateMilkyWayWallPaper()
         } else {
             return
         }
@@ -281,4 +332,11 @@ enum PortalNodes: String, CaseIterable {
     case backC
 }
 
-
+struct Constants {
+    static let plugHeadphonesAlertTitle = "Just a second..."
+    static let plugHeadphonesAlertMessage = "To enjoy the full experience of Starscape, please plug in your headphones or connect your bluetooth headphones, if you don't have either no problem, just turn your iPhone speaker volume up. P.S make sure silent mode is off 😊"
+    static let instructionsTitle = "How to use"
+    static let instructionsMessage = "Bring your phone near ground level and point the camera towards the ground to scan the area, you may have to squat. Once a blue grid shows up, tap the grid and a portal to Starscape will appear. P.S You may have to look for the portal"
+    static let makeSureOpenSpaceTitle = "Space"
+    static let makeSureOpenSpaceMessage = "Make sure you are in an open space around 6m x 6m with no obstacles in the way"
+}
