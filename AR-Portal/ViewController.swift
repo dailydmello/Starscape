@@ -20,34 +20,56 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
     var audioPlayer: AVAudioPlayer!
     var grids = [Grid]()
     var portalNode: SCNNode?
-    var gridNode: SCNNode?
     
     //MARK: LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.sceneView.debugOptions = [SCNDebugOptions.showWorldOrigin, SCNDebugOptions.showFeaturePoints]
-        self.configuration.planeDetection = .horizontal
-        self.sceneView.session.run(configuration)
-        self.sceneView.delegate = self
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        self.sceneView.addGestureRecognizer(tapGestureRecognizer)
+        setupView()
+        sceneView.debugOptions = [SCNDebugOptions.showFeaturePoints]
+        configuration.planeDetection = .horizontal
+        sceneView.session.run(configuration)
+        sceneView.delegate = self
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
+        sceneView.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    @objc func handleTap(sender: UITapGestureRecognizer) {
+    @objc func tapped(sender: UITapGestureRecognizer) {
+        // Get 2D position of touch event on screen
         guard let sceneView = sender.view as? ARSCNView else {return}
         let touchLocation = sender.location(in: sceneView)
-        let hitTestResult = sceneView.hitTest(touchLocation, types: .existingPlaneUsingExtent)
-        if !hitTestResult.isEmpty {
-            gridNode?.removeFromParentNode()
+        
+        // Translate those 2D points to 3D points using hitTest (existing plane)
+        let hitTestResults = sceneView.hitTest(touchLocation, types: .existingPlaneUsingExtent)
+        
+        
+        if !hitTestResults.isEmpty {
+            // Get hitTest results and ensure that the hitTest corresponds to a grid that has been placed on a wall
+            guard let hitTest = hitTestResults.first, let anchor = hitTest.anchor as? ARPlaneAnchor, let _ = grids.index(where: { $0.anchor == anchor }) else {
+                return
+            }
+            
             configuration.planeDetection = []
             sceneView.debugOptions = []
             sceneView.session.run(configuration)
+            
             segmentedControl.isHidden = false
-            addPortal(hitTestResult: hitTestResult.first!)
-            startMusic()
+            
+            //remove all grids
+            grids.map { $0.removeFromParentNode() }
+            
+            addPortal(hitTestResult: hitTest)
         } else {
             //do nothing
         }
+    }
+    
+    //MARK: Setup View
+    func setupView() {
+        let normalTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        let selectedTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        segmentedControl.setTitleTextAttributes(normalTextAttributes, for: .normal)
+        segmentedControl.setTitleTextAttributes(selectedTextAttributes, for: .selected)
     }
     
     func startMusic() {
@@ -72,8 +94,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         portalNode?.position =  SCNVector3(planeXposition, planeYposition, planeZposition)
         
         if let portalNode = portalNode {
-            self.sceneView.scene.rootNode.addChildNode(portalNode)
-            updateEarthRiseSmoothNode()
+            sceneView.scene.rootNode.addChildNode(portalNode)
+            startMusic()
+            updateEarthRiseSmoothWallPaper()
         } else {
             return
         }
@@ -82,14 +105,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
         let grid = Grid(anchor: planeAnchor)
-        self.grids.append(grid)
+        grids.append(grid)
         node.addChildNode(grid)
-        gridNode = node
-        
-        
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-//            node.removeFromParentNode()
-//        }
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
@@ -108,9 +125,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
     @IBAction func indexChanged(_ sender: Any) {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
-            updateEarthRiseSmoothNode()
-        case 1:
             updateMilkyWayWallPaper()
+        case 1:
+            updateEarthRiseSmoothWallPaper()
         case 2:
             updateGeneralStarsWallPaper()
         default:
@@ -119,7 +136,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
     }
     
     //MARK: Update Environment
-    func updateEarthRiseSmoothNode() {
+    func updateEarthRiseSmoothWallPaper() {
         for node in PortalNodes.allCases {
             if node == .backA {
                 updateEarthRiseSmoothWallPaper(node: node, with: .earthRiseSmoothBackA)

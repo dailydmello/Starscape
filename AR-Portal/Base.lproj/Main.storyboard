@@ -20,11 +20,11 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </arscnView>
                             <segmentedControl hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="mIT-Ed-C41">
-                                <rect key="frame" x="146" y="561" width="83" height="32"/>
+                                <rect key="frame" x="59" y="561" width="257" height="32"/>
                                 <segments>
-                                    <segment title="1"/>
-                                    <segment title="2"/>
-                                    <segment title="3"/>
+                                    <segment title="Milky Way"/>
+                                    <segment title="Earth Rise"/>
+                                    <segment title="Dark Night"/>
                                 </segments>
                                 <connections>
                                     <action selector="indexChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="QhW-uk-yhO"/>
