@@ -61,7 +61,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
             segmentedControl.isHidden = false
             
             //remove all grids
-            grids.map { $0.removeFromParentNode() }
+            _ = grids.map { $0.removeFromParentNode() }
             
             addPortal(hitTestResult: hitTest)
         } else {
@@ -180,7 +180,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         case 1:
             updateEarthRiseSmoothWallPaper()
         case 2:
-            updateGeneralStarsWallPaper()
+            updateMarsWallPaper()
         default:
             break
         }
@@ -253,6 +253,28 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         }
     }
     
+    func updateMarsWallPaper() {
+        for node in PortalNodes.allCases {
+            if node == .backA {
+                //do nothing
+            } else if node == .backB {
+                //do nothing
+            } else if node == .backC {
+                //do nothing
+            } else if node == .bottom {
+                updateMarsWallPaper(node: node, with: .marsBottom)
+            } else if node == .front {
+                updateMarsWallPaper(node: node, with: .marsFront)
+            }  else if node == .left {
+                updateMarsWallPaper(node: node, with: .marsLeft)
+            } else if node == .right {
+                updateMarsWallPaper(node: node, with: .marsRight)
+            } else if node == .top {
+                updateMarsWallPaper(node: node, with: .marsTop)
+            }
+        }
+    }
+    
     func updateEarthRiseSmoothWallPaper(node: PortalNodes, with wallPaperName: EarthRiseSmooth) {
         let child = portalNode?.childNode(withName: node.rawValue, recursively: true)
         child?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "Portal.scnassets/\(wallPaperName.rawValue).png")
@@ -272,6 +294,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
     }
     
     func updateGeneralStarsWallPaper(node: PortalNodes, with wallPaperName: GeneralStars) {
+        let child = portalNode?.childNode(withName: node.rawValue, recursively: true)
+        child?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "Portal.scnassets/\(wallPaperName.rawValue).png")
+        child?.renderingOrder = 200
+        if let mask = child?.childNode(withName: "mask", recursively: false) {
+            mask.geometry?.firstMaterial?.transparency = 0.000001
+        }
+    }
+    
+    func updateMarsWallPaper(node: PortalNodes, with wallPaperName: Mars) {
         let child = portalNode?.childNode(withName: node.rawValue, recursively: true)
         child?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "Portal.scnassets/\(wallPaperName.rawValue).png")
         child?.renderingOrder = 200
@@ -319,6 +350,14 @@ enum GeneralStars: String, CaseIterable {
     case generalStarsLeft
     case generalStarsRight
     case generalStarsTop
+}
+
+enum Mars: String, CaseIterable {
+    case marsTop
+    case marsRight
+    case marsLeft
+    case marsFront
+    case marsBottom
 }
 
 enum PortalNodes: String, CaseIterable {
