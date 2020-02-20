@@ -186,6 +186,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         }
     }
     
+    @IBAction func instructionsTapped(_ sender: Any) {
+        performSegue(withIdentifier: "toOnboarding", sender: self)
+    }
+    
+    
     //MARK: Update Environment
     func updateEarthRiseSmoothWallPaper() {
         for node in PortalNodes.allCases {

@@ -30,12 +30,21 @@
                                     <action selector="indexChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="QhW-uk-yhO"/>
                                 </connections>
                             </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f05-j4-eVt">
+                                <rect key="frame" x="166.66666666666666" y="812" width="81" height="30"/>
+                                <state key="normal" title="Instructions"/>
+                                <connections>
+                                    <action selector="instructionsTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wM1-OC-VHu"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Ygn-3s-aaH" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ViQ-aU-7oG"/>
                             <constraint firstItem="Ygn-3s-aaH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="WLw-U4-SPq"/>
+                            <constraint firstItem="f05-j4-eVt" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="ixS-Ec-NXA"/>
                             <constraint firstAttribute="bottom" secondItem="Ygn-3s-aaH" secondAttribute="bottom" id="lgA-lV-XXp"/>
+                            <constraint firstItem="f05-j4-eVt" firstAttribute="top" secondItem="mIT-Ed-C41" secondAttribute="bottom" constant="25" id="oSp-2y-Lao"/>
                             <constraint firstItem="mIT-Ed-C41" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="uUO-3m-KeJ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="mIT-Ed-C41" secondAttribute="bottom" constant="75" id="zO3-li-auJ"/>
                             <constraint firstItem="Ygn-3s-aaH" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="zOr-bg-Bwc"/>
@@ -46,11 +55,12 @@
                     <connections>
                         <outlet property="sceneView" destination="Ygn-3s-aaH" id="iA3-h0-abh"/>
                         <outlet property="segmentedControl" destination="mIT-Ed-C41" id="FFh-rW-TUc"/>
+                        <segue destination="QD9-H4-IAv" kind="show" identifier="toOnboarding" id="VaE-uK-f49"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="137.68115942028987" y="133.92857142857142"/>
+            <point key="canvasLocation" x="-1762" y="123"/>
         </scene>
         <!--Onboarding Page View Controller-->
         <scene sceneID="a71-vN-Uxe">
@@ -58,55 +68,49 @@
                 <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="ha8-43-JgY" customClass="OnboardingPageViewController" customModule="Starscape" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eUB-A8-NWk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2146" y="134"/>
+            <point key="canvasLocation" x="-3971" y="123"/>
         </scene>
         <!--Onboarding View Controller-->
-        <scene sceneID="r6g-dp-zMd">
+        <scene sceneID="GpM-g7-oK1">
             <objects>
-                <viewController storyboardIdentifier="OnboardingViewController" id="Tx7-dw-ij0" customClass="OnboardingViewController" customModule="Starscape" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Alx-ez-9ud">
+                <viewController storyboardIdentifier="OnboardingViewController" modalPresentationStyle="fullScreen" id="QD9-H4-IAv" customClass="OnboardingViewController" customModule="Starscape" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3uZ-aG-W6m">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="7vT-30-yoA">
-                                <rect key="frame" x="20" y="64" width="374" height="778"/>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T6n-ES-V0K">
+                                <rect key="frame" x="20" y="118" width="374" height="778"/>
                                 <connections>
-                                    <segue destination="ha8-43-JgY" kind="embed" id="3hp-B4-xJc"/>
+                                    <segue destination="ha8-43-JgY" kind="embed" id="lYS-B7-q9f"/>
                                 </connections>
                             </containerView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iGS-IV-3Sl">
-                                <rect key="frame" x="330" y="89" width="35" height="22"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="22" id="1iX-rh-ZQQ"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="GillSans-SemiBold" family="Gill Sans" pointSize="15"/>
-                                <state key="normal" title=" Exit ">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Os-Y4-PFR">
+                                <rect key="frame" x="344" y="84" width="30" height="30"/>
+                                <state key="normal" title="Exit"/>
                                 <connections>
-                                    <action selector="skipTapped:" destination="Tx7-dw-ij0" eventType="touchUpInside" id="cja-Ss-m2b"/>
+                                    <action selector="exitTapped:" destination="QD9-H4-IAv" eventType="touchUpInside" id="e2u-ZI-TUc"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="iGS-IV-3Sl" firstAttribute="top" secondItem="7vT-30-yoA" secondAttribute="top" constant="25" id="6Lz-ce-vjZ"/>
-                            <constraint firstItem="ugd-si-HBT" firstAttribute="bottom" secondItem="7vT-30-yoA" secondAttribute="bottom" constant="20" id="6Yg-cb-hSP"/>
-                            <constraint firstItem="ugd-si-HBT" firstAttribute="trailing" secondItem="7vT-30-yoA" secondAttribute="trailing" constant="20" id="9Kz-Fz-ixm"/>
-                            <constraint firstItem="7vT-30-yoA" firstAttribute="leading" secondItem="ugd-si-HBT" secondAttribute="leading" constant="20" id="IDv-mF-5OW"/>
-                            <constraint firstItem="7vT-30-yoA" firstAttribute="top" secondItem="ugd-si-HBT" secondAttribute="top" constant="20" id="IbY-5I-cIm"/>
-                            <constraint firstItem="ugd-si-HBT" firstAttribute="trailing" secondItem="iGS-IV-3Sl" secondAttribute="trailing" constant="49" id="WtF-Uc-f0N"/>
+                            <constraint firstItem="T6n-ES-V0K" firstAttribute="top" secondItem="7R8-eY-M1v" secondAttribute="top" constant="20" id="2gC-US-VwH"/>
+                            <constraint firstItem="T6n-ES-V0K" firstAttribute="leading" secondItem="7R8-eY-M1v" secondAttribute="leading" constant="20" id="EAt-oK-i87"/>
+                            <constraint firstItem="7R8-eY-M1v" firstAttribute="trailing" secondItem="3Os-Y4-PFR" secondAttribute="trailing" constant="40" id="ZaH-aG-GzB"/>
+                            <constraint firstItem="7R8-eY-M1v" firstAttribute="bottom" secondItem="T6n-ES-V0K" secondAttribute="bottom" constant="20" id="ZiL-90-0N9"/>
+                            <constraint firstItem="7R8-eY-M1v" firstAttribute="trailing" secondItem="T6n-ES-V0K" secondAttribute="trailing" constant="20" id="aSl-DV-JYk"/>
+                            <constraint firstItem="3Os-Y4-PFR" firstAttribute="top" secondItem="7R8-eY-M1v" secondAttribute="top" constant="40" id="igR-mi-N4H"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="ugd-si-HBT"/>
+                        <viewLayoutGuide key="safeArea" id="7R8-eY-M1v"/>
                     </view>
+                    <navigationItem key="navigationItem" id="8w8-HX-4OW"/>
                     <connections>
-                        <outlet property="container" destination="7vT-30-yoA" id="kOG-C8-cEy"/>
-                        <outlet property="skipButton" destination="iGS-IV-3Sl" id="IOa-Ri-cBG"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="toMain" id="LyI-BN-kju"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="TZO-uH-Nkd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NIo-jw-cff" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-687" y="119"/>
+            <point key="canvasLocation" x="-3151" y="123"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Ssn-qQ-bWn">
@@ -131,7 +135,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NIr-3v-rdy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1352.1739130434785" y="847.76785714285711"/>
+            <point key="canvasLocation" x="-3204" y="838"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="YzN-tW-Gny">
@@ -156,7 +160,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="viE-jE-z0Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2145" y="848"/>
+            <point key="canvasLocation" x="-3970" y="838"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="z1i-UY-VfJ">
@@ -181,7 +185,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fv2-xs-tPi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-630" y="848"/>
+            <point key="canvasLocation" x="-2475" y="838"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="OcP-Qg-t8H">
@@ -206,7 +210,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8ZE-OL-K5g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="138" y="848"/>
+            <point key="canvasLocation" x="-1761" y="838"/>
         </scene>
     </scenes>
     <resources>
