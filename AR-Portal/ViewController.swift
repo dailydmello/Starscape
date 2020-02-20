@@ -56,6 +56,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
             
             configuration.planeDetection = []
             sceneView.debugOptions = []
+            sceneView.isUserInteractionEnabled = false
             sceneView.session.run(configuration)
             
             segmentedControl.isHidden = false
