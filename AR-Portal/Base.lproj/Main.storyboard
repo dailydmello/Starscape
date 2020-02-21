@@ -20,11 +20,12 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </arscnView>
                             <segmentedControl hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="mIT-Ed-C41">
-                                <rect key="frame" x="78.666666666666686" y="756" width="257" height="32"/>
+                                <rect key="frame" x="35.666666666666657" y="756" width="343" height="32"/>
                                 <segments>
                                     <segment title="Milky Way"/>
                                     <segment title="Earth Rise"/>
                                     <segment title="Dark Night"/>
+                                    <segment title="Nebula"/>
                                 </segments>
                                 <connections>
                                     <action selector="indexChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="QhW-uk-yhO"/>
@@ -65,7 +66,7 @@
         <!--Onboarding Page View Controller-->
         <scene sceneID="a71-vN-Uxe">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="ha8-43-JgY" customClass="OnboardingPageViewController" customModule="Starscape" customModuleProvider="target" sceneMemberID="viewController"/>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="ha8-43-JgY" customClass="OnboardingPageViewController" customModule="Starscape" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eUB-A8-NWk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-3971" y="123"/>
@@ -79,7 +80,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T6n-ES-V0K">
-                                <rect key="frame" x="20" y="118" width="374" height="778"/>
+                                <rect key="frame" x="20" y="64" width="374" height="778"/>
                                 <connections>
                                     <segue destination="ha8-43-JgY" kind="embed" id="lYS-B7-q9f"/>
                                 </connections>
@@ -92,7 +93,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                         <constraints>
                             <constraint firstItem="T6n-ES-V0K" firstAttribute="top" secondItem="7R8-eY-M1v" secondAttribute="top" constant="20" id="2gC-US-VwH"/>
                             <constraint firstItem="T6n-ES-V0K" firstAttribute="leading" secondItem="7R8-eY-M1v" secondAttribute="leading" constant="20" id="EAt-oK-i87"/>

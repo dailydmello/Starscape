@@ -182,6 +182,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
             updateEarthRiseSmoothWallPaper()
         case 2:
             updateMarsWallPaper()
+        case 3:
+            updateNebulaWallPaper()
         default:
             break
         }
@@ -281,6 +283,29 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         }
     }
     
+    func updateNebulaWallPaper() {
+        for node in PortalNodes.allCases {
+            if node == .backA {
+                updateNebulaWallPaper(node: node, with: .nebulaBackA)
+            } else if node == .backB {
+                updateNebulaWallPaper(node: node, with: .nebulaBackB)
+            } else if node == .backC {
+                updateNebulaWallPaper(node: node, with: .nebulaBackC)
+            } else if node == .bottom {
+                updateNebulaWallPaper(node: node, with: .nebulaBottom)
+            } else if node == .front {
+                updateNebulaWallPaper(node: node, with: .nebulaFront)
+            }  else if node == .left {
+                updateNebulaWallPaper(node: node, with: .nebulaLeft)
+            } else if node == .right {
+                updateNebulaWallPaper(node: node, with: .nebulaRight)
+            } else if node == .top {
+                updateNebulaWallPaper(node: node, with: .nebulaTop)
+            }
+        }
+    }
+    
+    
     func updateEarthRiseSmoothWallPaper(node: PortalNodes, with wallPaperName: EarthRiseSmooth) {
         let child = portalNode?.childNode(withName: node.rawValue, recursively: true)
         child?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "Portal.scnassets/\(wallPaperName.rawValue).png")
@@ -316,6 +341,16 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
             mask.geometry?.firstMaterial?.transparency = 0.000001
         }
     }
+    
+    func updateNebulaWallPaper(node: PortalNodes, with wallPaperName: Nebula) {
+        let child = portalNode?.childNode(withName: node.rawValue, recursively: true)
+        child?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "Portal.scnassets/\(wallPaperName.rawValue).png")
+        child?.renderingOrder = 200
+        if let mask = child?.childNode(withName: "mask", recursively: false) {
+            mask.geometry?.firstMaterial?.transparency = 0.000001
+        }
+    }
+
 }
 
 //MARK: Environment Enums
@@ -376,6 +411,18 @@ enum PortalNodes: String, CaseIterable {
     case backB
     case backC
 }
+
+enum Nebula: String, CaseIterable {
+    case nebulaBackA
+    case nebulaBackB
+    case nebulaBackC
+    case nebulaBottom
+    case nebulaFront
+    case nebulaLeft
+    case nebulaRight
+    case nebulaTop
+}
+
 
 struct Constants {
     static let plugHeadphonesAlertTitle = "Just a second..."
