@@ -24,7 +24,8 @@ class OnboardingPageViewController: UIPageViewController {
         return [self.newOnboardingViewController(identifier: "OnboardingViewController1"),
                 self.newOnboardingViewController(identifier: "OnboardingViewController2"),
                 self.newOnboardingViewController(identifier: "OnboardingViewController3"),
-                self.newOnboardingViewController(identifier: "OnboardingViewController4")]
+                self.newOnboardingViewController(identifier: "OnboardingViewController4"),
+                self.newOnboardingViewController(identifier: "OnboardingViewController5")]
     }()
     
     private func newOnboardingViewController(identifier: String) -> UIViewController {

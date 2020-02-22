@@ -35,7 +35,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        showPlugInHeadphonesAlert(isHeadphonesPluggedIn: isHeadphonesConnected())
+        //showPlugInHeadphonesAlert(isHeadphonesPluggedIn: isHeadphonesConnected())
         super.viewDidAppear(animated)
     }
             
