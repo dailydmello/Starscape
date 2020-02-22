@@ -33,11 +33,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
         sceneView.addGestureRecognizer(tapGestureRecognizer)
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        //showPlugInHeadphonesAlert(isHeadphonesPluggedIn: isHeadphonesConnected())
-        super.viewDidAppear(animated)
-    }
             
     @objc func tapped(sender: UITapGestureRecognizer) {
         // Get 2D position of touch event on screen
@@ -77,51 +72,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         segmentedControl.setTitleTextAttributes(normalTextAttributes, for: .normal)
         segmentedControl.setTitleTextAttributes(selectedTextAttributes, for: .selected)
     }
-    
-    //MARK: Instructions
-    func showPlugInHeadphonesAlert(isHeadphonesPluggedIn: Bool) {
-        if !isHeadphonesPluggedIn {
-            let alertController = UIAlertController(title: Constants.plugHeadphonesAlertTitle, message: Constants.plugHeadphonesAlertMessage, preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: .default) { _ in
-                self.showSpaceAlert()
-            }
-            alertController.addAction(okAction)
-            present(alertController, animated: true, completion: nil)
-        } else {
-            showSpaceAlert()
-        }
-    }
-    
-    func showSpaceAlert() {
-        let alertController = UIAlertController(title: Constants.makeSureOpenSpaceTitle, message: Constants.makeSureOpenSpaceMessage, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
-            self.showInstructionsAlert()
-        }
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    func showInstructionsAlert() {
-        let alertController = UIAlertController(title: Constants.instructionsTitle, message: Constants.instructionsMessage, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "I'm ready", style: .default, handler: nil)
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    func isHeadphonesConnected() -> Bool {
-        let currentRoute = AVAudioSession.sharedInstance().currentRoute
         
-        for description in currentRoute.outputs {
-            switch description.portType {
-            case .headphones, .bluetoothHFP, .bluetoothA2DP, .bluetoothLE:
-                return true
-            default:
-                return false
-            }
-        }
-        return false
-    }
-    
     //MARK: Start Music
     func startMusic() {
         let soundURL = Bundle.main.url(forResource: "ambient", withExtension: "mp3" )
@@ -182,14 +133,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
             updateEarthRiseSmoothWallPaper()
         case 2:
             updateMarsWallPaper()
-        case 3:
-            updateNebulaWallPaper()
         default:
             break
         }
     }
     
     @IBAction func instructionsTapped(_ sender: Any) {
+        audioPlayer.stop()
         performSegue(withIdentifier: "toOnboarding", sender: self)
     }
     
@@ -239,28 +189,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         }
     }
     
-    func updateGeneralStarsWallPaper() {
-        for node in PortalNodes.allCases {
-            if node == .backA {
-                updateGeneralStarsWallPaper(node: node, with: .generalStarsBackA)
-            } else if node == .backB {
-                updateGeneralStarsWallPaper(node: node, with: .generalStarsBackB)
-            } else if node == .backC {
-                updateGeneralStarsWallPaper(node: node, with: .generalStarsBackC)
-            } else if node == .bottom {
-                updateGeneralStarsWallPaper(node: node, with: .generalStarsBottom)
-            } else if node == .front {
-                updateGeneralStarsWallPaper(node: node, with: .generalStarsFront)
-            }  else if node == .left {
-                updateGeneralStarsWallPaper(node: node, with: .generalStarsLeft)
-            } else if node == .right {
-                updateGeneralStarsWallPaper(node: node, with: .generalStarsRight)
-            } else if node == .top {
-                updateGeneralStarsWallPaper(node: node, with: .generalStarsTop)
-            }
-        }
-    }
-    
     func updateMarsWallPaper() {
         for node in PortalNodes.allCases {
             if node == .backA {
@@ -279,28 +207,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
                 updateMarsWallPaper(node: node, with: .marsRight)
             } else if node == .top {
                 updateMarsWallPaper(node: node, with: .marsTop)
-            }
-        }
-    }
-    
-    func updateNebulaWallPaper() {
-        for node in PortalNodes.allCases {
-            if node == .backA {
-                updateNebulaWallPaper(node: node, with: .nebulaBackA)
-            } else if node == .backB {
-                updateNebulaWallPaper(node: node, with: .nebulaBackB)
-            } else if node == .backC {
-                updateNebulaWallPaper(node: node, with: .nebulaBackC)
-            } else if node == .bottom {
-                updateNebulaWallPaper(node: node, with: .nebulaBottom)
-            } else if node == .front {
-                updateNebulaWallPaper(node: node, with: .nebulaFront)
-            }  else if node == .left {
-                updateNebulaWallPaper(node: node, with: .nebulaLeft)
-            } else if node == .right {
-                updateNebulaWallPaper(node: node, with: .nebulaRight)
-            } else if node == .top {
-                updateNebulaWallPaper(node: node, with: .nebulaTop)
             }
         }
     }
@@ -324,15 +230,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         }
     }
     
-    func updateGeneralStarsWallPaper(node: PortalNodes, with wallPaperName: GeneralStars) {
-        let child = portalNode?.childNode(withName: node.rawValue, recursively: true)
-        child?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "Portal.scnassets/\(wallPaperName.rawValue).png")
-        child?.renderingOrder = 200
-        if let mask = child?.childNode(withName: "mask", recursively: false) {
-            mask.geometry?.firstMaterial?.transparency = 0.000001
-        }
-    }
-    
     func updateMarsWallPaper(node: PortalNodes, with wallPaperName: Mars) {
         let child = portalNode?.childNode(withName: node.rawValue, recursively: true)
         child?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "Portal.scnassets/\(wallPaperName.rawValue).png")
@@ -341,16 +238,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
             mask.geometry?.firstMaterial?.transparency = 0.000001
         }
     }
-    
-    func updateNebulaWallPaper(node: PortalNodes, with wallPaperName: Nebula) {
-        let child = portalNode?.childNode(withName: node.rawValue, recursively: true)
-        child?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "Portal.scnassets/\(wallPaperName.rawValue).png")
-        child?.renderingOrder = 200
-        if let mask = child?.childNode(withName: "mask", recursively: false) {
-            mask.geometry?.firstMaterial?.transparency = 0.000001
-        }
-    }
-
 }
 
 //MARK: Environment Enums
@@ -382,17 +269,6 @@ enum EarthRiseSmooth: String, CaseIterable {
     case earthRiseSmoothTop
 }
 
-enum GeneralStars: String, CaseIterable {
-    case generalStarsBackA
-    case generalStarsBackB
-    case generalStarsBackC
-    case generalStarsBottom
-    case generalStarsFront
-    case generalStarsLeft
-    case generalStarsRight
-    case generalStarsTop
-}
-
 enum Mars: String, CaseIterable {
     case marsTop
     case marsRight
@@ -411,18 +287,6 @@ enum PortalNodes: String, CaseIterable {
     case backB
     case backC
 }
-
-enum Nebula: String, CaseIterable {
-    case nebulaBackA
-    case nebulaBackB
-    case nebulaBackC
-    case nebulaBottom
-    case nebulaFront
-    case nebulaLeft
-    case nebulaRight
-    case nebulaTop
-}
-
 
 struct Constants {
     static let plugHeadphonesAlertTitle = "Just a second..."
