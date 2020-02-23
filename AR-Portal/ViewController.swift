@@ -17,7 +17,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     let configuration = ARWorldTrackingConfiguration()
-    var audioPlayer: AVAudioPlayer!
+    var audioPlayer: AVAudioPlayer?
     var grids = [Grid]()
     var portalNode: SCNNode?
     
@@ -32,11 +32,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
         sceneView.addGestureRecognizer(tapGestureRecognizer)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        showPlugInHeadphonesAlert(isHeadphonesPluggedIn: isHeadphonesConnected())
-        super.viewDidAppear(animated)
     }
             
     @objc func tapped(sender: UITapGestureRecognizer) {
@@ -56,12 +51,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
             
             configuration.planeDetection = []
             sceneView.debugOptions = []
+            sceneView.isUserInteractionEnabled = false
             sceneView.session.run(configuration)
             
             segmentedControl.isHidden = false
             
             //remove all grids
-            grids.map { $0.removeFromParentNode() }
+            _ = grids.map { $0.removeFromParentNode() }
             
             addPortal(hitTestResult: hitTest)
         } else {
@@ -76,58 +72,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         segmentedControl.setTitleTextAttributes(normalTextAttributes, for: .normal)
         segmentedControl.setTitleTextAttributes(selectedTextAttributes, for: .selected)
     }
-    
-    //MARK: Instructions
-    func showPlugInHeadphonesAlert(isHeadphonesPluggedIn: Bool) {
-        if !isHeadphonesPluggedIn {
-            let alertController = UIAlertController(title: Constants.plugHeadphonesAlertTitle, message: Constants.plugHeadphonesAlertMessage, preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: .default) { _ in
-                self.showSpaceAlert()
-            }
-            alertController.addAction(okAction)
-            present(alertController, animated: true, completion: nil)
-        } else {
-            showSpaceAlert()
-        }
-    }
-    
-    func showSpaceAlert() {
-        let alertController = UIAlertController(title: Constants.makeSureOpenSpaceTitle, message: Constants.makeSureOpenSpaceMessage, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
-            self.showInstructionsAlert()
-        }
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    func showInstructionsAlert() {
-        let alertController = UIAlertController(title: Constants.instructionsTitle, message: Constants.instructionsMessage, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "I'm ready", style: .default, handler: nil)
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    func isHeadphonesConnected() -> Bool {
-        let currentRoute = AVAudioSession.sharedInstance().currentRoute
         
-        for description in currentRoute.outputs {
-            switch description.portType {
-            case .headphones, .bluetoothHFP, .bluetoothA2DP, .bluetoothLE:
-                return true
-            default:
-                return false
-            }
-        }
-        return false
-    }
-    
     //MARK: Start Music
     func startMusic() {
         let soundURL = Bundle.main.url(forResource: "ambient", withExtension: "mp3" )
         do{
             audioPlayer = try AVAudioPlayer(contentsOf: soundURL!)
-            audioPlayer.numberOfLoops = -1
-            audioPlayer.play()
+            audioPlayer?.numberOfLoops = -1
+            audioPlayer?.play()
         }
         catch{
             print(error)
@@ -153,6 +105,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         }
     }
     
+    //MARK: ARSCNViewDelegate Methods
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
         let grid = Grid(anchor: planeAnchor)
@@ -180,10 +133,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         case 1:
             updateEarthRiseSmoothWallPaper()
         case 2:
-            updateGeneralStarsWallPaper()
+            updateMarsWallPaper()
         default:
             break
         }
+    }
+    
+    @IBAction func instructionsTapped(_ sender: Any) {
+        audioPlayer?.stop()
+        performSegue(withIdentifier: "toOnboarding", sender: self)
     }
     
     //MARK: Update Environment
@@ -231,24 +189,24 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         }
     }
     
-    func updateGeneralStarsWallPaper() {
+    func updateMarsWallPaper() {
         for node in PortalNodes.allCases {
             if node == .backA {
-                updateGeneralStarsWallPaper(node: node, with: .generalStarsBackA)
+                //do nothing
             } else if node == .backB {
-                updateGeneralStarsWallPaper(node: node, with: .generalStarsBackB)
+                //do nothing
             } else if node == .backC {
-                updateGeneralStarsWallPaper(node: node, with: .generalStarsBackC)
+                //do nothing
             } else if node == .bottom {
-                updateGeneralStarsWallPaper(node: node, with: .generalStarsBottom)
+                updateMarsWallPaper(node: node, with: .marsBottom)
             } else if node == .front {
-                updateGeneralStarsWallPaper(node: node, with: .generalStarsFront)
+                updateMarsWallPaper(node: node, with: .marsFront)
             }  else if node == .left {
-                updateGeneralStarsWallPaper(node: node, with: .generalStarsLeft)
+                updateMarsWallPaper(node: node, with: .marsLeft)
             } else if node == .right {
-                updateGeneralStarsWallPaper(node: node, with: .generalStarsRight)
+                updateMarsWallPaper(node: node, with: .marsRight)
             } else if node == .top {
-                updateGeneralStarsWallPaper(node: node, with: .generalStarsTop)
+                updateMarsWallPaper(node: node, with: .marsTop)
             }
         }
     }
@@ -271,7 +229,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         }
     }
     
-    func updateGeneralStarsWallPaper(node: PortalNodes, with wallPaperName: GeneralStars) {
+    func updateMarsWallPaper(node: PortalNodes, with wallPaperName: Mars) {
         let child = portalNode?.childNode(withName: node.rawValue, recursively: true)
         child?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "Portal.scnassets/\(wallPaperName.rawValue).png")
         child?.renderingOrder = 200
@@ -310,15 +268,12 @@ enum EarthRiseSmooth: String, CaseIterable {
     case earthRiseSmoothTop
 }
 
-enum GeneralStars: String, CaseIterable {
-    case generalStarsBackA
-    case generalStarsBackB
-    case generalStarsBackC
-    case generalStarsBottom
-    case generalStarsFront
-    case generalStarsLeft
-    case generalStarsRight
-    case generalStarsTop
+enum Mars: String, CaseIterable {
+    case marsTop
+    case marsRight
+    case marsLeft
+    case marsFront
+    case marsBottom
 }
 
 enum PortalNodes: String, CaseIterable {
@@ -330,13 +285,4 @@ enum PortalNodes: String, CaseIterable {
     case backA
     case backB
     case backC
-}
-
-struct Constants {
-    static let plugHeadphonesAlertTitle = "Just a second..."
-    static let plugHeadphonesAlertMessage = "To enjoy the full experience of Starscape, please plug in your headphones or connect your bluetooth headphones, if you don't have either no problem, just turn your iPhone speaker volume up. P.S make sure silent mode is off 😊"
-    static let instructionsTitle = "How to use"
-    static let instructionsMessage = "Bring your phone near ground level and point the camera towards the ground to scan the area, you may have to squat. Once a blue grid shows up, tap the grid and a portal to Starscape will appear. P.S You may have to look for the portal"
-    static let makeSureOpenSpaceTitle = "Space"
-    static let makeSureOpenSpaceMessage = "Make sure you are in an open space around 6m x 6m with no obstacles in the way"
 }

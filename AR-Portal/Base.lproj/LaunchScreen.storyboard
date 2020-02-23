@@ -16,10 +16,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="starboy" translatesAutoresizingMaskIntoConstraints="NO" id="BKg-6d-eOc">
-                                <rect key="frame" x="167" y="393" width="80" height="120"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="starscapeLong" translatesAutoresizingMaskIntoConstraints="NO" id="BKg-6d-eOc">
+                                <rect key="frame" x="0.0" y="393" width="414" height="120"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="ALC-XR-ksY"/>
                                     <constraint firstAttribute="height" constant="120" id="zax-4j-WUk"/>
                                 </constraints>
                             </imageView>
@@ -27,7 +26,9 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="BKg-6d-eOc" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="DCD-Bz-Ak9"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="BKg-6d-eOc" secondAttribute="trailing" id="E3S-kw-A4k"/>
                             <constraint firstItem="BKg-6d-eOc" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="vZw-vn-qj5"/>
+                            <constraint firstItem="BKg-6d-eOc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="zUb-PS-zEF"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -38,6 +39,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="starboy" width="964" height="1555"/>
+        <image name="starscapeLong" width="400" height="129"/>
     </resources>
 </document>
