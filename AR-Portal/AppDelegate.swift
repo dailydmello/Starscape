@@ -23,14 +23,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if (UserDefaults.standard.value(forKey: "OnboardScreenShown") as? String) == nil {
             viewController = storyboard.instantiateViewController(withIdentifier: "OnboardingViewController")
-        }else{
+        } else {
             viewController = storyboard.instantiateInitialViewController()!
-            
         }
         self.window?.rootViewController = viewController
         self.window?.makeKeyAndVisible()
-        
-        
+                
         return true
     }
 

@@ -9,7 +9,7 @@
 import UIKit
 
 class OnboardingPageViewController: UIPageViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,11 +21,11 @@ class OnboardingPageViewController: UIPageViewController {
     }
     
     private(set) lazy var orderedViewControllers: [UIViewController] = {
-        return [self.newOnboardingViewController(identifier: "OnboardingViewController1"),
-                self.newOnboardingViewController(identifier: "OnboardingViewController2"),
-                self.newOnboardingViewController(identifier: "OnboardingViewController3"),
-                self.newOnboardingViewController(identifier: "OnboardingViewController4"),
-                self.newOnboardingViewController(identifier: "OnboardingViewController5")]
+        return [newOnboardingViewController(identifier: "OnboardingViewController1"),
+                newOnboardingViewController(identifier: "OnboardingViewController2"),
+                newOnboardingViewController(identifier: "OnboardingViewController3"),
+                newOnboardingViewController(identifier: "OnboardingViewController4"),
+                newOnboardingViewController(identifier: "OnboardingViewController5")]
     }()
     
     private func newOnboardingViewController(identifier: String) -> UIViewController {
@@ -69,11 +69,12 @@ extension OnboardingPageViewController: UIPageViewControllerDataSource {
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let viewControllerIndex = orderedViewControllers.firstIndex(of: viewController)else {
+        guard let viewControllerIndex = orderedViewControllers.firstIndex(of: viewController) else {
             return nil
         }
         
         let nextIndex = viewControllerIndex + 1
+        
         let orderedViewControllersCount = orderedViewControllers.count
         
         guard orderedViewControllersCount != nextIndex else {

@@ -10,22 +10,10 @@ import UIKit
 
 class OnboardingViewController: UIViewController {
 
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-//        container.layer.cornerRadius = 20
-//        skipButton.layer.borderWidth = 1.2
-//        skipButton.layer.borderColor = UIColor.white.cgColor
-    }
-    
-    
-    //    @IBAction func skipTapped(_ sender: Any) {
-////        UserDefaults.standard.set("true", forKey: "OnboardScreenShown")
-//        performSegue(withIdentifier: "toMain", sender: self)
-//    }
-    
+    @IBOutlet weak var exitButton: UIButton!
     
     @IBAction func exitTapped(_ sender: Any) {
+        ////        UserDefaults.standard.set("true", forKey: "OnboardScreenShown")
         performSegue(withIdentifier: "toMain", sender: self)
     }
 }

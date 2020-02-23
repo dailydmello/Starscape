@@ -17,7 +17,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     let configuration = ARWorldTrackingConfiguration()
-    var audioPlayer: AVAudioPlayer!
+    var audioPlayer: AVAudioPlayer?
     var grids = [Grid]()
     var portalNode: SCNNode?
     
@@ -78,8 +78,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         let soundURL = Bundle.main.url(forResource: "ambient", withExtension: "mp3" )
         do{
             audioPlayer = try AVAudioPlayer(contentsOf: soundURL!)
-            audioPlayer.numberOfLoops = -1
-            audioPlayer.play()
+            audioPlayer?.numberOfLoops = -1
+            audioPlayer?.play()
         }
         catch{
             print(error)
@@ -105,6 +105,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         }
     }
     
+    //MARK: ARSCNViewDelegate Methods
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
         let grid = Grid(anchor: planeAnchor)
@@ -139,10 +140,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
     }
     
     @IBAction func instructionsTapped(_ sender: Any) {
-        audioPlayer.stop()
+        audioPlayer?.stop()
         performSegue(withIdentifier: "toOnboarding", sender: self)
     }
-    
     
     //MARK: Update Environment
     func updateEarthRiseSmoothWallPaper() {
@@ -210,7 +210,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
             }
         }
     }
-    
     
     func updateEarthRiseSmoothWallPaper(node: PortalNodes, with wallPaperName: EarthRiseSmooth) {
         let child = portalNode?.childNode(withName: node.rawValue, recursively: true)
@@ -286,13 +285,4 @@ enum PortalNodes: String, CaseIterable {
     case backA
     case backB
     case backC
-}
-
-struct Constants {
-    static let plugHeadphonesAlertTitle = "Just a second..."
-    static let plugHeadphonesAlertMessage = "To enjoy the full experience of Starscape, please plug in your headphones or connect your bluetooth headphones, if you don't have either no problem, just turn your iPhone speaker volume up. P.S make sure silent mode is off 😊"
-    static let instructionsTitle = "How to use"
-    static let instructionsMessage = "Bring your phone near ground level and point the camera towards the ground to scan the area, you may have to squat. Once a blue grid shows up, tap the grid and a portal to Starscape will appear. P.S You may have to look for the portal"
-    static let makeSureOpenSpaceTitle = "Space"
-    static let makeSureOpenSpaceMessage = "Make sure you are in an open space around 6m x 6m with no obstacles in the way"
 }
