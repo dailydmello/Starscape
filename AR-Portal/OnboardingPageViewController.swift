@@ -13,7 +13,7 @@ class OnboardingPageViewController: UIPageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.dataSource = self
+        dataSource = self
         
         if let firstViewController = orderedViewControllers.first {
             setViewControllers([firstViewController], direction: .forward, animated: true, completion: nil)
@@ -21,11 +21,11 @@ class OnboardingPageViewController: UIPageViewController {
     }
     
     private(set) lazy var orderedViewControllers: [UIViewController] = {
-        return [newOnboardingViewController(identifier: "OnboardingViewController1"),
-                newOnboardingViewController(identifier: "OnboardingViewController2"),
-                newOnboardingViewController(identifier: "OnboardingViewController3"),
-                newOnboardingViewController(identifier: "OnboardingViewController4"),
-                newOnboardingViewController(identifier: "OnboardingViewController5")]
+        return [newOnboardingViewController(identifier: K.onboardingViewController1),
+                newOnboardingViewController(identifier: K.onboardingViewController2),
+                newOnboardingViewController(identifier: K.onboardingViewController3),
+                newOnboardingViewController(identifier: K.onboardingViewController4),
+                newOnboardingViewController(identifier: K.onboardingViewController5)]
     }()
     
     private func newOnboardingViewController(identifier: String) -> UIViewController {

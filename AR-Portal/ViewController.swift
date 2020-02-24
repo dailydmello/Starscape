@@ -75,21 +75,21 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         
     //MARK: Start Music
     func startMusic() {
-        let soundURL = Bundle.main.url(forResource: "ambient", withExtension: "mp3" )
-        do{
+        let soundURL = Bundle.main.url(forResource: K.ambient, withExtension: K.mp3 )
+        do {
             audioPlayer = try AVAudioPlayer(contentsOf: soundURL!)
             audioPlayer?.numberOfLoops = -1
             audioPlayer?.play()
         }
-        catch{
+        catch {
             print(error)
         }
     }
     
     //MARK: Portal Methods
     func addPortal(hitTestResult: ARHitTestResult) {
-        let portalScene = SCNScene(named: "Portal.scnassets/Portal.scn")
-        portalNode = portalScene!.rootNode.childNode(withName: "Portal", recursively: false)!
+        let portalScene = SCNScene(named: K.portalPath)
+        portalNode = portalScene!.rootNode.childNode(withName: K.portal, recursively: false)!
         let transform = hitTestResult.worldTransform
         let planeXposition = transform.columns.3.x
         let planeYposition = transform.columns.3.y
@@ -141,7 +141,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
     
     @IBAction func instructionsTapped(_ sender: Any) {
         audioPlayer?.stop()
-        performSegue(withIdentifier: "toOnboarding", sender: self)
+        performSegue(withIdentifier: K.toOnboarding, sender: self)
     }
     
     //MARK: Update Environment
@@ -215,7 +215,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         let child = portalNode?.childNode(withName: node.rawValue, recursively: true)
         child?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "Portal.scnassets/\(wallPaperName.rawValue).png")
         child?.renderingOrder = 200
-        if let mask = child?.childNode(withName: "mask", recursively: false) {
+        if let mask = child?.childNode(withName: K.mask, recursively: false) {
             mask.geometry?.firstMaterial?.transparency = 0.000001
         }
     }
@@ -224,7 +224,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         let child = portalNode?.childNode(withName: node.rawValue, recursively: true)
         child?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "Portal.scnassets/\(wallPaperName.rawValue).png")
         child?.renderingOrder = 200
-        if let mask = child?.childNode(withName: "mask", recursively: false) {
+        if let mask = child?.childNode(withName: K.mask, recursively: false) {
             mask.geometry?.firstMaterial?.transparency = 0.000001
         }
     }
@@ -233,20 +233,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         let child = portalNode?.childNode(withName: node.rawValue, recursively: true)
         child?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "Portal.scnassets/\(wallPaperName.rawValue).png")
         child?.renderingOrder = 200
-        if let mask = child?.childNode(withName: "mask", recursively: false) {
+        if let mask = child?.childNode(withName: K.mask, recursively: false) {
             mask.geometry?.firstMaterial?.transparency = 0.000001
         }
     }
 }
 
 //MARK: Environment Enums
-enum Theme {
-    case milkyWay
-    case earthRiseSmooth
-    case moonPhases
-    case distantWorld
-}
-
 enum MilkyWay: String, CaseIterable {
     case milkyWayBackA
     case milkyWayBackB
@@ -267,17 +260,6 @@ enum MoonPhases: String, CaseIterable {
     case moonPhasesLeft
     case moonPhasesRight
     case moonPhasesTop
-}
-
-enum DistantWorld: String, CaseIterable {
-    case distantWorldBackA
-    case distantWorldBackB
-    case distantWorldBackC
-    case distantWorldBottom
-    case distantWorldFront
-    case distantWorldLeft
-    case distantWorldRight
-    case distantWorldTop
 }
 
 enum EarthRiseSmooth: String, CaseIterable {

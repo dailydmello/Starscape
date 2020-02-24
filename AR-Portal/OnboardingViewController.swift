@@ -13,7 +13,7 @@ class OnboardingViewController: UIViewController {
     @IBOutlet weak var exitButton: UIButton!
     
     @IBAction func exitTapped(_ sender: Any) {
-        ////        UserDefaults.standard.set("true", forKey: "OnboardScreenShown")
-        performSegue(withIdentifier: "toMain", sender: self)
+        UserDefaults.standard.set("true", forKey: K.onboardScreenShown)
+        performSegue(withIdentifier: K.toMain, sender: self)
     }
 }

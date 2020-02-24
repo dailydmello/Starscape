@@ -17,17 +17,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         //To display onboarding
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        window = UIWindow(frame: UIScreen.main.bounds)
+        let storyboard = UIStoryboard(name: K.main, bundle: nil)
         var viewController: UIViewController
         
-        if (UserDefaults.standard.value(forKey: "OnboardScreenShown") as? String) == nil {
-            viewController = storyboard.instantiateViewController(withIdentifier: "OnboardingViewController")
+        if (UserDefaults.standard.value(forKey: K.onboardScreenShown) as? String) == nil {
+            viewController = storyboard.instantiateViewController(withIdentifier: K.onboardingViewController)
         } else {
             viewController = storyboard.instantiateInitialViewController()!
         }
-        self.window?.rootViewController = viewController
-        self.window?.makeKeyAndVisible()
+        window?.rootViewController = viewController
+        window?.makeKeyAndVisible()
                 
         return true
     }

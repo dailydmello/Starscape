@@ -15,6 +15,7 @@
 		0BA483611F5874A500BD5DDA /* Portal.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 0BA483601F5874A500BD5DDA /* Portal.scnassets */; };
 		DD1032D223FDFD2E00D7D33C /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1032D123FDFD2E00D7D33C /* OnboardingViewController.swift */; };
 		DD1032D423FDFDB700D7D33C /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1032D323FDFDB700D7D33C /* OnboardingPageViewController.swift */; };
+		DD1032D6240492FA00D7D33C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1032D5240492FA00D7D33C /* Constants.swift */; };
 		DD84235823EE3EC7005EC592 /* ambient.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD84235723EE3EC7005EC592 /* ambient.mp3 */; };
 		DDE176F1223090A600F0877E /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE176F0223090A600F0877E /* Grid.swift */; };
 /* End PBXBuildFile section */
@@ -30,6 +31,7 @@
 		0BA483601F5874A500BD5DDA /* Portal.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = Portal.scnassets; sourceTree = "<group>"; };
 		DD1032D123FDFD2E00D7D33C /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		DD1032D323FDFDB700D7D33C /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
+		DD1032D5240492FA00D7D33C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		DD84235723EE3EC7005EC592 /* ambient.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ambient.mp3; sourceTree = "<group>"; };
 		DDE176F0223090A600F0877E /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -70,6 +72,7 @@
 				0BA4834C1F585DA000BD5DDA /* ViewController.swift */,
 				DD1032D123FDFD2E00D7D33C /* OnboardingViewController.swift */,
 				DD1032D323FDFDB700D7D33C /* OnboardingPageViewController.swift */,
+				DD1032D5240492FA00D7D33C /* Constants.swift */,
 				0BA4834E1F585DA000BD5DDA /* Main.storyboard */,
 				0BA483511F585DA000BD5DDA /* Assets.xcassets */,
 				0BA483531F585DA000BD5DDA /* LaunchScreen.storyboard */,
@@ -174,6 +177,7 @@
 				DD1032D423FDFDB700D7D33C /* OnboardingPageViewController.swift in Sources */,
 				DDE176F1223090A600F0877E /* Grid.swift in Sources */,
 				DD1032D223FDFD2E00D7D33C /* OnboardingViewController.swift in Sources */,
+				DD1032D6240492FA00D7D33C /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
