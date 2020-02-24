@@ -99,7 +99,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         if let portalNode = portalNode {
             sceneView.scene.rootNode.addChildNode(portalNode)
             startMusic()
-            updateMilkyWayWallPaper()
+            updateEarthRiseSmoothWallPaper()
         } else {
             return
         }
@@ -129,11 +129,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
     @IBAction func indexChanged(_ sender: Any) {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
-            updateMilkyWayWallPaper()
-        case 1:
             updateEarthRiseSmoothWallPaper()
+        case 1:
+            updateMilkyWayWallPaper()
         case 2:
-            updateMarsWallPaper()
+            updateMoonPhasesWallPaper()
         default:
             break
         }
@@ -189,24 +189,24 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         }
     }
     
-    func updateMarsWallPaper() {
+    func updateMoonPhasesWallPaper() {
         for node in PortalNodes.allCases {
             if node == .backA {
-                //do nothing
+                updateMoonPhasesWallPaper(node: node, with: .moonPhasesBackA)
             } else if node == .backB {
-                //do nothing
+                updateMoonPhasesWallPaper(node: node, with: .moonPhasesBackB)
             } else if node == .backC {
-                //do nothing
+                updateMoonPhasesWallPaper(node: node, with: .moonPhasesBackC)
             } else if node == .bottom {
-                updateMarsWallPaper(node: node, with: .marsBottom)
+                updateMoonPhasesWallPaper(node: node, with: .moonPhasesBottom)
             } else if node == .front {
-                updateMarsWallPaper(node: node, with: .marsFront)
+                updateMoonPhasesWallPaper(node: node, with: .moonPhasesFront)
             }  else if node == .left {
-                updateMarsWallPaper(node: node, with: .marsLeft)
+                updateMoonPhasesWallPaper(node: node, with: .moonPhasesLeft)
             } else if node == .right {
-                updateMarsWallPaper(node: node, with: .marsRight)
+                updateMoonPhasesWallPaper(node: node, with: .moonPhasesRight)
             } else if node == .top {
-                updateMarsWallPaper(node: node, with: .marsTop)
+                updateMoonPhasesWallPaper(node: node, with: .moonPhasesTop)
             }
         }
     }
@@ -229,7 +229,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
         }
     }
     
-    func updateMarsWallPaper(node: PortalNodes, with wallPaperName: Mars) {
+    func updateMoonPhasesWallPaper(node: PortalNodes, with wallPaperName: MoonPhases) {
         let child = portalNode?.childNode(withName: node.rawValue, recursively: true)
         child?.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "Portal.scnassets/\(wallPaperName.rawValue).png")
         child?.renderingOrder = 200
@@ -243,7 +243,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, AVAudioPlayerDelegate
 enum Theme {
     case milkyWay
     case earthRiseSmooth
-    case generalStars
+    case moonPhases
+    case distantWorld
 }
 
 enum MilkyWay: String, CaseIterable {
@@ -257,6 +258,28 @@ enum MilkyWay: String, CaseIterable {
     case milkyWayTop
 }
 
+enum MoonPhases: String, CaseIterable {
+    case moonPhasesBackA
+    case moonPhasesBackB
+    case moonPhasesBackC
+    case moonPhasesBottom
+    case moonPhasesFront
+    case moonPhasesLeft
+    case moonPhasesRight
+    case moonPhasesTop
+}
+
+enum DistantWorld: String, CaseIterable {
+    case distantWorldBackA
+    case distantWorldBackB
+    case distantWorldBackC
+    case distantWorldBottom
+    case distantWorldFront
+    case distantWorldLeft
+    case distantWorldRight
+    case distantWorldTop
+}
+
 enum EarthRiseSmooth: String, CaseIterable {
     case earthRiseSmoothBackA
     case earthRiseSmoothBackB
@@ -266,14 +289,6 @@ enum EarthRiseSmooth: String, CaseIterable {
     case earthRiseSmoothLeft
     case earthRiseSmoothRight
     case earthRiseSmoothTop
-}
-
-enum Mars: String, CaseIterable {
-    case marsTop
-    case marsRight
-    case marsLeft
-    case marsFront
-    case marsBottom
 }
 
 enum PortalNodes: String, CaseIterable {
