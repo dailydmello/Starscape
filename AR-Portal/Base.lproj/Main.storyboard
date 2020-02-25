@@ -22,7 +22,7 @@
                             <segmentedControl hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="mIT-Ed-C41">
                                 <rect key="frame" x="20" y="756" width="374" height="32"/>
                                 <segments>
-                                    <segment title="Earth RIse"/>
+                                    <segment title="Earth Rise"/>
                                     <segment title="Milky Way"/>
                                     <segment title="Lunar Eclipse"/>
                                 </segments>
